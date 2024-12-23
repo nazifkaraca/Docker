@@ -1,0 +1,19 @@
+services: # Eklenmesi istediğimiz image veya projelerin yazıldığı kısımdır
+  api:
+    build: ./api # Api projesi için nerede build etmesi gerektiğini söylüyoruz. Dockerfile api klasörünün içinde olduğu için bu dizin içinde build yap dedik
+    container_name: api_c
+    ports:
+      - '4000:4000'
+    volumes: 
+      - ./api:/app # Relative path kullanarak api source code'un olduğu klasör ve app'e mapleme yaptık. 
+      - /app/node_modules
+  myblog:
+    build: ./myblog
+    container_name: myblog
+    ports:
+      - '3000:3000'
+    volumes: 
+      - ./myblog:/app # Relative path kullanarak myblog source code'un olduğu klasör ve app'e mapleme yaptık. 
+      - /app/node_modules
+    stdin_open: true # react app olduğu için dinamikliği koruması için ekledik
+    tty: true
